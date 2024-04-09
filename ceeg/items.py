@@ -16,5 +16,4 @@ class CeegItem(scrapy.Item):
     title = scrapy.Field()
     # 发布时间
     publishtime = scrapy.Field()
-#     来源
-    source = scrapy.Field()
+

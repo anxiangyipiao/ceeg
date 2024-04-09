@@ -1,9 +1,9 @@
 from urllib.parse import quote_plus
 import pymysql
-from  ceeg.settings import MYSQL_CONFIG
+from ceeg.settings import MYSQL_CONFIG
 import logging
 import redis
-
+import json
 
 class DB:
     def __init__(self):
@@ -11,6 +11,7 @@ class DB:
         # 连接数据库
         self.conn = pymysql.connect(**MYSQL_CONFIG)
         self.cursor = self.conn.cursor()
+        self.r = redis.Redis(host='localhost', port=6379, db=0)
 
     def InsertData(self,db,item):
 
@@ -40,21 +41,33 @@ class DB:
         result = self.cursor.fetchall()
 
 
-        for row in result:
+        for row in result[1:7]:
             # params 里的数据是字符串，需要转换为字典
             row['params'] = eval(row['params'])
             # xpath 里的数据是字符串，需要转换为列表
             row["xpath"] = row["xpath"].split(",")  # 将字符串转换为列表
-            if row['name'] == '千里马':
+
+            if int(row["id"]) >1 and int(row["id"]) < 8:
                 data.append(row)
 
+        # 将数据放入redis
+        # self.PushDatatoRedis(data)
         return data
 
 
     def PushDatatoRedis(self,data):
-        # 连接redis
-        r = redis.Redis(host='localhost', port=6379, db=0)
 
         # 将数据放入redis
         for row in data:
-            r.lpush('example:start_urls', row['url'])
+            request_info_str = json.dumps(row)
+            self.r.lpush('example:start_urls', request_info_str)
+
+        datas = self.ReadDataFromRedis()
+
+
+
+    # 从redis中读取数据
+    def ReadDataFromRedis(self):
+
+        data = self.r.lrange('example:start_urls', 0, -1)
+        return data
