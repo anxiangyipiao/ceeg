@@ -38,7 +38,8 @@ ROBOTSTXT_OBEY = False
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-"Referer":"http://www.gdtzb.com/zb/search.php",
+# "Referer":"https://search.qianlima.com/?keywords=%E5%8F%98%E5%8E%8B%E5%99%A8",
+# "Referer":"https://s.zhaobiao.cn/s",
 "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0"
 }
 
@@ -64,6 +65,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    "ceeg.pipelines.CeegPipeline": 300,
+   #  'ceeg.pipelines.RedisPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -172,3 +174,18 @@ USER_AGENT_LIST = [
 "Openwave/ UCWEB7.0.2.37/28/999",
 ]
 
+# # 启用 scrapy-redis 的调度器
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+#
+# # 启用 scrapy-redis 的去重器
+# DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+#
+# # 启用 scrapy-redis 的去重器
+# REDIS_START_URLS_AS_SET = True
+# # 启用 scrapy-redis 的 Redis 连接
+# # scrapy-redis的组件会代理所有与Redis相关的操作，
+# # 包括从Redis获取起始URL、存储去重指纹、以及将爬取到的数据项存入Redis。
+# REDIS_URL = 'redis://localhost:6379'
+#
+# # 断点续爬
+# SCHEDULER_PERSIST = True

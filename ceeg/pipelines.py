@@ -43,3 +43,8 @@ class CeegPipeline:
         self.db.cursor.execute(sql)
         self.db.conn.commit()
         print("Table created successfully")
+
+
+
+class RedisPipeline():
+    pass

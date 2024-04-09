@@ -2,6 +2,8 @@ from urllib.parse import quote_plus
 import pymysql
 from  ceeg.settings import MYSQL_CONFIG
 import logging
+import redis
+
 
 class DB:
     def __init__(self):
@@ -37,12 +39,22 @@ class DB:
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
 
-        for row in result[1:]:
+
+        for row in result:
             # params 里的数据是字符串，需要转换为字典
             row['params'] = eval(row['params'])
             # xpath 里的数据是字符串，需要转换为列表
             row["xpath"] = row["xpath"].split(",")  # 将字符串转换为列表
-            data.append(row)
+            if row['name'] == '千里马':
+                data.append(row)
 
         return data
 
+
+    def PushDatatoRedis(self,data):
+        # 连接redis
+        r = redis.Redis(host='localhost', port=6379, db=0)
+
+        # 将数据放入redis
+        for row in data:
+            r.lpush('example:start_urls', row['url'])
