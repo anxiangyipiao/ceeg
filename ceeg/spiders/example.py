@@ -25,7 +25,7 @@ class ExampleSpider(RedisSpider):
         params = request_info['params']
         method = request_info['method']
         xpath_rule = request_info["xpath"]
-
+        # del request_info
         return scrapy.FormRequest(url, callback=self.parse, method=method,
                                   formdata=params, meta={'xpath_rule': xpath_rule},
                                   headers={'Referer':url}
@@ -39,7 +39,7 @@ class ExampleSpider(RedisSpider):
 
         if self.is_potential_json(sign):
             # 如果返回的是json数据
-            # self.parse_json(response, xpath_rules)
+
             json_data = response.json()
             datapath = xpath_rules[:len(xpath_rules) - 3]
             result = self.get_data_by_path(json_data, datapath)
@@ -52,7 +52,6 @@ class ExampleSpider(RedisSpider):
 
         else:
             # 如果返回的是html数据
-            # self.parse_html(response, xpath_rules)
 
             result = response.xpath(xpath_rules[0])
             for item in result:
@@ -78,11 +77,6 @@ class ExampleSpider(RedisSpider):
         if isinstance(data, dict) and path_rules[0] in data:
             return self.get_data_by_path(data[path_rules[0]],path_rules[1:])
         return None
-
-    
-
-
-
 
 
     def ensure_http_protocol(url, default_protocol='http://'):

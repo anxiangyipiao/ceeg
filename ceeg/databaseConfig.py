@@ -11,7 +11,7 @@ class DB:
         # 连接数据库
         self.conn = pymysql.connect(**MYSQL_CONFIG)
         self.cursor = self.conn.cursor()
-        self.r = redis.Redis(host='localhost', port=6379, db=0)
+        self.r = redis.Redis(host='localhost', port=6379, db=1)
 
     def InsertData(self,db,item):
 
@@ -41,7 +41,7 @@ class DB:
         result = self.cursor.fetchall()
 
 
-        for row in result[1:7]:
+        for row in result[1:3]:
             # params 里的数据是字符串，需要转换为字典
             row['params'] = eval(row['params'])
             # xpath 里的数据是字符串，需要转换为列表
@@ -62,7 +62,7 @@ class DB:
             request_info_str = json.dumps(row)
             self.r.lpush('example:start_urls', request_info_str)
 
-        datas = self.ReadDataFromRedis()
+        # datas = self.ReadDataFromRedis()
 
 
 

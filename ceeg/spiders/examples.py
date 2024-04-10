@@ -1,7 +1,7 @@
 import scrapy
 from datetime import datetime
 from ceeg.databaseConfig import DB
-import json
+
 
 
 class ExampleSpider(scrapy.Spider):
@@ -30,7 +30,7 @@ class ExampleSpider(scrapy.Spider):
 
         if self.is_potential_json(sign):
             # 如果返回的是json数据
-            # self.parse_json(response,xpath_rules)
+
             json_data = response.json()
             datapath = xpath_rules[:len(xpath_rules) - 3]
             result = self.get_data_by_path(json_data, datapath)

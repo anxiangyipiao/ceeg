@@ -62,8 +62,8 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "ceeg.pipelines.CeegPipeline": 300,
-   #  'ceeg.pipelines.RedisPipeline': 300,
+   # "ceeg.pipelines.CeegPipeline": 300,
+    'ceeg.pipelines.RedisPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -172,7 +172,7 @@ USER_AGENT_LIST = [
 "Openwave/ UCWEB7.0.2.37/28/999",
 ]
 
-# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-# DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-# REDIS_URL = "redis://localhost:6379"
-# SCHEDULER_PERSIST = True
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+REDIS_URL = "redis://localhost:6379"
+SCHEDULER_PERSIST = True
