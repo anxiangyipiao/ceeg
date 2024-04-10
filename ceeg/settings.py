@@ -63,7 +63,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    # "ceeg.pipelines.CeegPipeline": 300,
-    'ceeg.pipelines.RedisPipeline': 300,
+    'scrapy_redis.pipelines.RedisPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -3,6 +3,8 @@ from datetime import datetime
 from ceeg.databaseConfig import DB
 
 
+page_datas =["page","currentPage","pn","pageNum","currentpage"]
+pages = 4
 
 class ExampleSpider(scrapy.Spider):
     name = "examples"
@@ -12,12 +14,20 @@ class ExampleSpider(scrapy.Spider):
         db = DB()
         datas = db.ReadData(db)
         for req_data in datas:
+
             url = req_data['url']
             params = req_data['params']
             method = req_data['method']
             xpath_rule = req_data["xpath"]
 
-            yield scrapy.FormRequest(url, callback=self.parse,
+            page_params = self.get_page_key(params) # 获取分页参数
+
+            # 构建不同页的请求
+            for i in range(1, pages):
+                params[page_params] = str(i)
+
+
+                yield scrapy.FormRequest(url, callback=self.parse,
                                      method=method, formdata=params,
                                      meta={'xpath_rule': xpath_rule},
                                      headers={'Referer': url})
@@ -119,3 +129,10 @@ class ExampleSpider(scrapy.Spider):
                     "title": title,
                     "publishTime": time
             }'''
+
+
+    def get_page_key(self,params):
+
+        for key in params.keys():
+            if key in page_datas:
+                return key

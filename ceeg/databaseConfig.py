@@ -41,13 +41,13 @@ class DB:
         result = self.cursor.fetchall()
 
 
-        for row in result[1:3]:
+        for row in result[1:7]:
             # params 里的数据是字符串，需要转换为字典
             row['params'] = eval(row['params'])
             # xpath 里的数据是字符串，需要转换为列表
             row["xpath"] = row["xpath"].split(",")  # 将字符串转换为列表
 
-            if int(row["id"]) >1 and int(row["id"]) < 8:
+            if int(row["id"]) == 2:
                 data.append(row)
 
         # 将数据放入redis
