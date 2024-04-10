@@ -2,8 +2,9 @@ import scrapy
 from datetime import datetime
 from ceeg.databaseConfig import DB
 
-
+# 分页key库
 page_datas =["page","currentPage","pn","pageNum","currentpage"]
+# 分页数
 pages = 4
 
 class ExampleSpider(scrapy.Spider):

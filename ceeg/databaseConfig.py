@@ -47,7 +47,7 @@ class DB:
             # xpath 里的数据是字符串，需要转换为列表
             row["xpath"] = row["xpath"].split(",")  # 将字符串转换为列表
 
-            if int(row["id"]) == 2:
+            if int(row["id"]) == 3:
                 data.append(row)
 
         # 将数据放入redis
